@@ -17,9 +17,15 @@ comprehensive management tools for admins.
 - Laravel, PHP, MySQL, JavaScript, Blade Templates
 
 ## Installation
+
 git clone [repo-url]
+
 composer install
+
 cp .env.example .env
+
 php artisan key:generate
+
 php artisan migrate
+
 php artisan serve
