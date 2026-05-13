@@ -8,7 +8,7 @@ class ProductDetailController extends Controller
 {
     public function product_detail(Product $product){
         $category_id=$product->category_id;
-        $related_products=Product::where('category_id',$category_id)
+        $related_products=Product::with('reviews')->where('category_id',$category_id)
         ->where('id','<>',$product->id)
         ->get();
         return view('product-detail',compact('product','related_products'));

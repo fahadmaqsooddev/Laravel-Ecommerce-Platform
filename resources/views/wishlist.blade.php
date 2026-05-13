@@ -114,7 +114,7 @@
             },
             success: function(response) {
                 alert('Product Added Into the cart');
-                singleCartUI(response.cart,response.cart_count,response.cart_total);
+                singleCartUI(response.cart,response.cart_count,response.cart_total,response.tax,response.total);
             },
             error: function(xhr) {
                 if (xhr.status === 401) {

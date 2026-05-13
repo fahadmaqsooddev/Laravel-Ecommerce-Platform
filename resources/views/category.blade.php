@@ -129,18 +129,7 @@
                                 <div class="card-figcaption-body">
                                     <div class="top-btn">
                                         <a href="#" title="Add to Cart" data-event-type="product-click" class="cartb button button--small card-figcaption-button"  data-product-id="{{ $pro->id }}"><svg width="20px" height="20px"><use xlink:href="#pcart"></use></svg></a>
-                                        <!-- <div class="bwish">
-                                            <form action="/wishlist.php?action&#x3D;add&amp;product_id&#x3D;111" class="form-wishlist form-action card-figcaption-button" data-wishlist-add method="post">     
-                                                <button type="submit" value="Add to My Wish List" title="Add to My Wish List">
-                                                    <svg width="18px" height="18px"> <use xlink:href="#bwish"></use></svg>
-                                                </button>
-                                            </form>
-                                        </div> -->
-                                        
-                                        <button class="button button--small card-figcaption-button quickview" data-product-id="111"><!-- Quick view --><svg width="19px" height="19px"><use xlink:href="#quick"></use></svg></button>
-                                        <label class="button button--small card-figcaption-button bcom" for="compare-111" title="Compare">
-                                            <svg width="18px" height="18px"> <use xlink:href="#bcom"></use></svg><input class="wb-compare" type="checkbox" name="products[]" value="111" id="compare-111" data-compare-id="111">
-                                        </label>
+                                      
                                     </div>
                                 </div>
                             </figcaption>
@@ -277,7 +266,7 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    console.log("Response Data",response);
+                    alert('Product Added Into the Cart');
                     singleCartUI(response.cart,response.cart_count,response.cart_total,response.tax,response.total);
                 },
                 error: function(xhr) {

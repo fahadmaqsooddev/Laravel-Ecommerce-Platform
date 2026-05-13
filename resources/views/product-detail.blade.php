@@ -1,6 +1,8 @@
 @php
     $productUrl = url()->current();
     $productTitle = $product->name;
+    $avgRating = round($product->reviews->avg('rating') ?? 0);
+    $reviewCount = $product->reviews->count();
 @endphp
 @extends('layouts.app')
 @section('content')
@@ -105,18 +107,23 @@
                                 </div>
                                 <div data-content-region="product_below_price"></div><hr>
                                 <div class="productView-rating">
-                                    <span class="productView-ratingWrapper" title="Product rating is 0 of 5" tabindex="0">
-                                        <div class="comments_note wb-list-product-reviews">
-                                            <span class="avg-rate bg-re3">
-                                                <span class="or-rate winter-review">
-                                                    <span class="icon icon--ratingEmpty"><i class="fa fa-star-o"></i></span><span class="icon icon--ratingEmpty"><i class="fa fa-star-o"></i></span><span class="icon icon--ratingEmpty"><i class="fa fa-star-o"></i></span><span class="icon icon--ratingEmpty"><i class="fa fa-star-o"></i></span><span class="icon icon--ratingEmpty"><i class="fa fa-star-o"></i></span><!-- snippet location product_rating -->
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </span>
-                                    <span>(No reviews yet)</span>
-                                    <a href="index.html" class="productView-reviewLink productView-reviewLink--new" data-reveal-id="modal-review-form" role="button">
-                                        Write a Review
+                                    <span class="productView-ratingWrapper" title="Product rating is {{ $avgRating }} of 5" tabindex="0">
+                                       <div class="comments_note wb-list-product-reviews">
+                                        <span class="or-rate winter-review">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                @if($i <= $avgRating)
+                                                    <i class="fa fa-star"></i>
+                                                @else
+                                                    <i class="fa fa-star-o"></i>
+                                                @endif
+                                            @endfor
+                                        </span>
+                                    </div>
+
+                                    <span>&nbsp;&nbsp;({{ $reviewCount }} reviews)</span>
+                                   
+                                    <a href="#" class="productView-reviewLink productView-reviewLink--new ms-2" data-reveal-id="modal-review-form" role="button">
+                                        &nbsp;Write a Review
                                     </a>
                                     <div id="modal-review-form" class="modal" data-reveal="">
                                         <div class="modal-content"><div class="modal-header">
@@ -367,15 +374,34 @@
                             <a class="tab-title" href="#tab-description">Description</a>
                         </li>
                     </ul>
-                    <div class="tabs-contents">
-                        <div class="tab-content is-active" id="tab-description">
-                            <p><span class="co-pro">[shortcode][countdown]08/10/2023[/countdown][/shortcode]</span><!-- pagebreak -->{!! $product->description !!}</p>
-                        </div>
-                        <div class="tab-content" id="tab-reviews">
-                        </div>
-                    </div>
+                    
                 </article>
             </div>
+
+            <div class="tabs-contents">
+                       
+                        <div class="tab-content is-active" id="tab-description">
+                            <p>{!! $product->description !!}</p>
+                             @if($product->reviews->count() > 0)
+                     <div class="home-heading  page-heading text-left"><h1><strong>Related</strong> Product Reviews</h1></div>
+                            @foreach($product->reviews as $review)
+                                <div class="review-item mb-3 p-3 border">
+                                    <strong>{{ $review->subject }}</strong>
+                                    <div class="rating">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <i class="fa {{ $i <= $review->rating ? 'fa-star' : 'fa-star-o' }}"></i>
+                                        @endfor
+                                    </div>
+                                    <p>{{ $review->comments }}</p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No reviews yet. Be the first to review this product.</p>
+                        @endif
+                        </div>
+                       
+
+                    </div>
             
             <div id="previewModal" class="modal modal--large" data-reveal="">
                 <button class="modal-close" type="button" title="Close">

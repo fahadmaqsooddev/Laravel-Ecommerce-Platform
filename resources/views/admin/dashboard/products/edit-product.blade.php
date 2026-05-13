@@ -60,7 +60,7 @@
               </div>
 
               <div class="form-group">
-                <label for="price">Price</label>
+                <label for="price">Price ($)</label>
                 <input type="number" name="price" class="form-control" id="price" placeholder="Enter Price" value="{{ old('price', $product->price) }}">
                 @error('price')
                 <span class="text-danger mt-5">{{ $message }}</span>
